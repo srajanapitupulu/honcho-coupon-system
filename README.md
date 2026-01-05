@@ -3,7 +3,7 @@
 This project is a high-performance Go-based microservice designed to handle high-concurrency "Flash Sale" scenarios where multiple users attempt to claim limited coupons simultaneously.
 
 ## 🚀 Architectural Overview
-[cite_start]With over **14 years of software engineering experience**, I have designed this system to prioritize **Consistency and Atomicity (ACID)**. While this is a Go-centric project, it follows the same rigorous **Clean Architecture and SOLID principles** I have applied throughout my career as a Senior Engineer at companies like **Gramedia and Alterra**.
+[cite_start]With over **14 years of software engineering experience**, I have designed this system to prioritize **Consistency and Atomicity (ACID)**. While this is a Go-centric project, it follows the same rigorous **Clean Architecture and SOLID principles** I have applied throughout my career as a Senior Engineer at companies like **Gramedia and Alterra**.[cite_end]
 
 ### Key Technical Implementations:
 * **Atomic Concurrency Control**: Used a "Pessimistic Locking" strategy at the database level (`UPDATE ... WHERE remaining_count > 0`) to prevent over-claiming during traffic spikes.
