@@ -3,7 +3,7 @@
 This project is a high-performance Go-based microservice designed to handle high-concurrency "Flash Sale" scenarios where multiple users attempt to claim limited coupons simultaneously.
 
 ## 🚀 Architectural Overview
-[cite_start]With over **14 years of software engineering experience**, I have designed this system to prioritize **Consistency and Atomicity (ACID)**. While this is a Go-centric project, it follows the same rigorous **Clean Architecture and SOLID principles** I have applied throughout my career as a Senior Engineer at companies like **Gramedia and Alterra**.[cite_end]
+I have designed this system to prioritize **Consistency and Atomicity (ACID)**. While this is a Go project, it follows the same **Clean Architecture and SOLID principles** pattern that I have applied throughout my career as a Senior Software Engineer at companies like **Gramedia(ID), Alterra(ID) and Tectah(UK)**.
 
 ### Key Technical Implementations:
 * **Atomic Concurrency Control**: Used a "Pessimistic Locking" strategy at the database level (`UPDATE ... WHERE remaining_count > 0`) to prevent over-claiming during traffic spikes.
@@ -57,7 +57,6 @@ curl -X POST http://localhost:8080/api/coupons/claim \
      -d '{"user_id": "user_777", "coupon_name": "PROMO_2026"}'
 ```
 
-
 ### 2. Automated Stress Tests
 
 To run the high-concurrency evaluation scenarios (The "Flash Sale" Attack & The "Double Dip" Attack):
@@ -75,15 +74,18 @@ To prepare this for an enterprise-level deployment, I would implement the follow
 4. **Observability:** Integrate Prometheus and Grafana to monitor Goroutine health and DB connection pools.
 
 ## 📄 License
-This project is licensed under the GNU General Public License v3.0 (GPL-3.0). See the LICENSE file for details.
+This project is licensed under the GNU General Public License v3.0 (GPL-3.0). See the [LICENSE](https://github.com/srajanapitupulu/honcho-coupon-system/blob/master/LICENSE) file for details.
 
 ## 📬 Contact
 
 **Samuel Oloan Raja Napitupulu**
+
 Senior Software Engineer 
 
+📍 Medan, North Sumatera, Indonesia
 
-📍 Medan, North Sumatera, Indonesia 
 📧 srajanapitupulu@gmail.com 
+
 🔗 LinkedIn: [Samuel Oloan Raja Napitupulu](https://www.linkedin.com/in/samuel-oloan-raja-napitupulu-98008b67)
+
 🖥️ GitHub: [srajanapitupulu](https://github.com/srajanapitupulu)
