@@ -25,7 +25,7 @@ To run this system, ensure you have the following installed:
 
 1.  **Clone the Repository:**
     ```bash
-    git clone [https://github.com/srajanapitupulu/honcho-coupon-system.git](https://github.com/srajanapitupulu/honcho-coupon-system.git)
+    git clone https://github.com/srajanapitupulu/honcho-coupon-system.git
     cd honcho-coupon-system
     ```
 
@@ -69,7 +69,21 @@ go test -v ./unit-test/...
 ## 📈 Roadmap for Production Scaling
 To prepare this for an enterprise-level deployment, I would implement the following:
 
-1. RabbitMQ Integration: Decouple the API from the database using a message broker to "level" traffic spikes and implement Dead Letter Queues (DLQ) for retry strategies.
-2. Distributed Caching (Redis): Cache coupon counts to reduce DB read pressure and implement distributed locking for multi-node setups.
-3. Saga Pattern: Utilize distributed transaction patterns for workflows involving external services like loyalty points or payments.
-4. Observability: Integrate Prometheus and Grafana to monitor Goroutine health and DB connection pools.
+1. **RabbitMQ Integration:** Decouple the API from the database using a message broker to "level" traffic spikes and implement Dead Letter Queues (DLQ) for retry strategies.
+2. **Distributed Caching (Redis):** Cache coupon counts to reduce DB read pressure and implement distributed locking for multi-node setups.
+3. **Saga Pattern:** Utilize distributed transaction patterns for workflows involving external services like loyalty points or payments.
+4. **Observability:** Integrate Prometheus and Grafana to monitor Goroutine health and DB connection pools.
+
+## 📄 License
+This project is licensed under the GNU General Public License v3.0 (GPL-3.0). See the LICENSE file for details.
+
+## 📬 Contact
+
+**Samuel Oloan Raja Napitupulu**
+Senior Software Engineer 
+
+
+📍 Medan, North Sumatera, Indonesia 
+📧 srajanapitupulu@gmail.com 
+🔗 LinkedIn: [Samuel Oloan Raja Napitupulu](https://www.linkedin.com/in/samuel-oloan-raja-napitupulu-98008b67)
+🖥️ GitHub: [srajanapitupulu](https://github.com/srajanapitupulu)
