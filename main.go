@@ -32,6 +32,7 @@ func main() {
 	// API Route
 	r.POST("/api/coupons", createCoupon)
 	r.POST("/api/coupons/claim", claimCoupon)
+	r.GET("/api/coupons/:name", getCouponDetails)
 
 	// Start Server
 	log.Println("Server starting on :8080")
@@ -118,4 +119,51 @@ func createCoupon(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Coupon created successfully!"})
+}
+
+
+
+// CouponDetailResponse represents the details of a coupon,
+// including its configured total limit, how many remain, and list of users who have claimed it.
+type CouponDetailResponse struct {
+	Name           	string 		`json:"name"`
+	TotalLimit     	int    		`json:"amount"`
+	RemainingCount 	int    		`json:"remaining_amount"`
+	ClaimedBy		[]string    `json:"claimed_by"`
+}
+
+func getCouponDetails(c *gin.Context) {
+	couponName := c.Param("name")
+
+	// Fetch coupon details
+	var coupon CouponDetailResponse
+	err := db.QueryRow("SELECT name, total_limit, remaining_count FROM coupons WHERE name = $1", couponName).
+		Scan(&coupon.Name, &coupon.TotalLimit, &coupon.RemainingCount)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Coupon not found"})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal error"})
+		}
+		return
+	}
+
+	// Fetch list of users who have claimed the coupon
+	rows, err := db.Query("SELECT user_id FROM claims WHERE coupon_name = $1", couponName)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal error"})
+		return
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var userID string
+		if err := rows.Scan(&userID); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal error"})
+			return
+		}
+		coupon.ClaimedBy = append(coupon.ClaimedBy, userID)
+	}
+
+	c.JSON(http.StatusOK, coupon)
 }
