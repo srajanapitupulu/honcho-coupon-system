@@ -30,7 +30,8 @@ func main() {
 	r := gin.Default()
 
 	// API Route
-	r.POST("/claim", claimCoupon)
+	r.POST("/api/coupons", createCoupon)
+	r.POST("/api/coupons/claim", claimCoupon)
 
 	// Start Server
 	log.Println("Server starting on :8080")
@@ -80,7 +81,7 @@ func claimCoupon(c *gin.Context) {
 	if rows == 0 {
 		// IF no rows were affected:
 		// RESPONSE ERROR: Coupon sold out or does not exist
-		c.JSON(http.StatusGone, gin.H{"error": "Coupon sold out or does not exist"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Coupon sold out or does not exist"})
 		return
 	}
 
@@ -93,4 +94,28 @@ func claimCoupon(c *gin.Context) {
 	// IF user claim and coupon decrement successful:
 	// RESPONSE SUCCESS: Coupon claimed successfully
 	c.JSON(http.StatusOK, gin.H{"message": "Coupon claimed successfully!"})
+}
+
+
+// CreateCouponRequest represents the request payload for creating a new coupon.
+// It contains the coupon's name and the discount amount to be applied.
+type CreateCouponRequest struct {
+	Name   string `json:"name" binding:"required"`
+	Amount int    `json:"amount" binding:"required"`
+}
+
+func createCoupon(c *gin.Context) {
+	var req CreateCouponRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	_, err := db.Exec("INSERT INTO coupons (name, total_limit, remaining_count) VALUES ($1, $2, $3)", req.Name, req.Amount, req.Amount)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create coupon"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Coupon created successfully!"})
 }
